@@ -1,0 +1,54 @@
+--Simple Queries
+
+--Symptoms Data
+
+--symptoms2006.csv
+select * 
+from dataset1.symptoms2006
+where UPPER(symptom1) = 'PAIN'
+order by vaers_id
+ 
+--symptoms2007.csv
+select * 
+from dataset1.symptoms2007
+where UPPER(symptom1) = 'WRONG DRUG ADMINISTERED'
+order by vaers_id
+
+--symptoms2008.csv
+select * 
+from dataset1.symptoms2008
+where NOT(symptom2) = 'Null'
+order by symptom2
+
+--symptoms2009.csv
+select * 
+from dataset1.symptoms2009
+where UPPER(symptom1) = 'DIARRHOEA'
+order by serialid
+
+--symptoms2010.csv
+select * 
+from dataset1.symptoms2010
+where UPPER(symptom1) = 'CRYING'
+order by symptom2
+
+
+--symptoms2011.csv
+select * 
+from dataset1.symptoms2010
+where UPPER(symptom1) = 'CRYING'
+order by symptom2
+
+--symptoms2012.csv
+
+
+--symptoms2013.csv
+
+
+--symptoms2014.csv
+
+
+--symptoms2015.csv
+
+
+--symptoms2016.csv
