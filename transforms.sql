@@ -20,43 +20,43 @@ select distinct vaers_id, symptom1, symptom2, "2006" as year
 from dataset1.symptoms2006
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2007" as year
 from dataset1.symptoms2007
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2008" as year
 from dataset1.symptoms2008
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2009" as year
 from dataset1.symptoms2009
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2010" as year
 from dataset1.symptoms2010
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2011" as year
 from dataset1.symptoms2011
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2012" as year
 from dataset1.symptoms2012
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2013" as year
 from dataset1.symptoms2013
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2014" as year
 from dataset1.symptoms2014
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2015" as year
 from dataset1.symptoms2015
 where symptom1 is not null and symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1, symptom2
+select distinct vaers_id, symptom1, symptom2, "2016" as year
 from dataset1.symptoms2016
 where symptom1 is not null and symptom2 is not null
 
