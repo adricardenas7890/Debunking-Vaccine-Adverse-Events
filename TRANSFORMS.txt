@@ -1,0 +1,5 @@
+Issues not resolved through Milestone #4
+- Vaccine table does not have primary key (vaccine_id)
+- Symptom table does not have primary key (symptom_id)
+
+
