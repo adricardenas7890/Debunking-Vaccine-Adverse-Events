@@ -6,7 +6,7 @@ from apache_beam.io import WriteToText
 # DoFn performs on each element in the input PCollection.
 # Adds primary key to table 
 class VaccineCountFn(beam.DoFn):
-  self.count = 1
+  count = 1
   def process(self, element):
     record = element
     vax_id = self.count
@@ -16,7 +16,7 @@ class VaccineCountFn(beam.DoFn):
     vax_manu = record.get('vax_manu')
     vax_route = record.get('vax_route')
     year = record.get('year')
-    self.count += 1
+    count += 1
     
 
 class MakeRecordFn(beam.DoFn):
@@ -57,7 +57,7 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
     qualified_table_name = PROJECT_ID + ':dataset1clean.vaccine_PK'
     table_schema = 'name:STRING,count:INTEGER'
     
-    out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
+    vaxid_out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
                                                     schema=table_schema,  
                                                     create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
                                                     write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE))
