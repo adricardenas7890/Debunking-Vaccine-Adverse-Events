@@ -18,9 +18,9 @@ class VaccineCountFn(beam.DoFn):
     vax_route = record.get('vax_route')
     year = record.get('year')
 
-    record = {'vax_id': vax_id, 'vaers_id': vaers_id, 'vax_name': vax_name,
-              'vax_type': vax_type, 'vax_manu': vax_manu, 'vax_route': vax_route,
-              'year': year}
+    record = {'vax_id': vax_id, 'vaers_id': vaers_id, 'vax_name': 'vax_name',
+              'vax_type': 'vax_type', 'vax_manu': 'vax_manu', 'vax_route': 'vax_route',
+              'year': 'year'}
     return [record]
     
 
