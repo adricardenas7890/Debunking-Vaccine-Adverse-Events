@@ -10,17 +10,17 @@ from apache_beam.io import WriteToText
 class VaccineCountFn(beam.DoFn):
   def process(self, element):
     record = element
-    vax_id = round(random.random() * 10000000)
-    vaers_id= record.get('vaers_id')
+    vax_id = round(random.randint(1,1000000))
+    vaers_id = record.get('vaers_id')
     vax_name = record.get('vax_name')
     vax_type = record.get('vax_type')
     vax_manu = record.get('vax_manu')
     vax_route = record.get('vax_route')
     year = record.get('year')
 
-    record = {'vax_id': vax_id, 'vaers_id': vaers_id, 'vax_name': 'vax_name',
-              'vax_type': 'vax_type', 'vax_manu': 'vax_manu', 'vax_route': 'vax_route',
-              'year': 'year'}
+    record = {'vax_id': vax_id, 'vaers_id': vaers_id, 'vax_name': vax_name,
+              'vax_type': vax_type, 'vax_manu': vax_manu, 'vax_route': vax_route,
+              'year': year}
     return [record]
     
 
@@ -60,7 +60,7 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
     vaxid_out_pcoll = vaxid_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
     qualified_table_name = PROJECT_ID + ':dataset1clean.vaccine_PK'
-    table_schema = 'vax_id:INTEGER, vaers_id:INTEGER, vax_name:STRING, vax_type:STRING, vax_manu:STRING, vax_route:STRING, year:INTEGER'
+    table_schema = 'vax_id:INTEGER, vaers_id:INTEGER, vax_name:STRING, vax_type:STRING, vax_manu:STRING, vax_route:STRING, year:STRING'
     
     vaxid_out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
                                                     schema=table_schema,  
