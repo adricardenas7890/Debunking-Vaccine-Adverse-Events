@@ -218,17 +218,20 @@ where vax_route is not null and vax_name is not null and vax_manu is not null
 
 
 
+
 --Milestone #6
 --Adding primary key to transformed symptom and vaccine table
 
 -- this query builds in a primary key called row into the symptom table and orders it by the row number 
-create table dataset1clean.symptom_PK as
-select row_number() over (order by vaers_id asc) as row,
+create table dataset1clean.symptom_PK1 as
+select row_number() over (order by vaers_id asc) as symptom_id,
 vaers_id, symptom1, symptom2, year from dataset1clean.symptom
 order by row
 
 -- this query does the same as above but for the vaccine table
-create table dataset1clean.vaccine_PK as
-select row_number() over (order by vaers_id asc) as row,
+create table dataset1clean.vaccine_PK1 as
+select row_number() over (order by vaers_id asc) as vax_id,
 vaers_id, vax_name, vax_type, vax_manu, vax_route, year from dataset1clean.vaccine
 order by row
+
+-- this additional transform 
