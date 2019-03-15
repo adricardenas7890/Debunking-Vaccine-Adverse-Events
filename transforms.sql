@@ -63,89 +63,89 @@ where symptom1 is not null and symptom2 is not null
 --Table Symptom
 --union of all unique symptoms for each vaers_id
 create table dataset1clean.vaersid_symptom as
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2006
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2006
 where symptom2 is not null
 union distinct 
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2007
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2007
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2008
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2008
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2009
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2009
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2010
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2010
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2011
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2011
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2012
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2012
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2013
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2013
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2014
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2014
 where symptom2 is not null
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2015
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2015
 union distinct
-select distinct vaers_id, symptom1 symptom
+select distinct vaers_id, symptom1 as symptom
 from dataset1.symptoms2016
 where symptom1 is not null
 union distinct
-select distinct vaers_id, symptom2 symptom
+select distinct vaers_id, symptom2 as symptom
 from dataset1.symptoms2016
 where symptom2 is not null
 
