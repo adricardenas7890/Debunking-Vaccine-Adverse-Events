@@ -1,0 +1,23 @@
+CROSS-TRANSFORMS.txt
+
+Dataset 2:
+
+Queries
+--Investigate average amount of deaths per state over the decade 2006-2016. Group by year.
+
+-- Investigate the average amount of patients disabled as a cause of the vaccine by manufacturer. Group by manufacturer.
+
+
+--Investigate which vaccines caused Death or Disabled field to report yes. Group by vaccines.
+
+--Investigate which vaccines caused the main concerns of Anti-vaxxers. Example: autism, death, disabled, etc. Would show only those vaccines that caused these symptoms. 
+
+--Identify which vaccines are administered to patients older than 18 and the prevalence of each.
+
+--Identify how many deaths occcured in at risk populations as a result of the vaccine. Example: over 65, under 2. Compare to how total amount of patients in those categories. 
+
+Transforms needed:
+
+String fields that indicate "Y" for Yes must also contain "N" for No instead of null to avoid complication.
+States and Sex fields must be normalized (all capitalized)
+Union all the years and add year field. 
