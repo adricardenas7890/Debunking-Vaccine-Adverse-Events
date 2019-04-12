@@ -26,3 +26,18 @@ Download: https://public.enigma.com/datasets/vaccine-adverse-event-reporting-sys
 Interesting relationships/trends: We are interested in analyzing what exactly is filed as an adverse symptom and which companies are responsible in having manufactured these vaccines. There may be companies which were interested in outputting a large number of vaccines without refining the symptoms that may come along. We are also interested in how minor/major the symptoms are. 
 
 Format: CSV file
+
+Update: April 12, 2019
+
+Dataset2: Vaccine Adverse Event Reporting System - Primary Information (2006-2016)
+////
+
+About: The primary Vaccine Adverse Event Reporting System (VAERS) files provide the best overview of vaccine related adverse events reported by patients and medical officials from 1990 to the present year.
+
+Description: These details include VAERS ID numbers, form filing dates, vaccination and onset dates, onset intervals, patients' states of residence, ages, sexes, symptoms, hospitalization details, current illnesses, prior conditions, prior vaccinations, disability indicators, recovery indicators, death indicators and dates, lab data descriptions, vaccine manufacturer numbers, vaccine administration fund types, and vaccine administering facility types. 
+
+Download: https://public.enigma.com/datasets/vaccine-adverse-event-reporting-system-primary-information-2006/685614a7-0023-492b-942f-78e0c8f98961
+
+Interesting relationships/trends: We are interested in comparing demographics in addition to the symptoms experienced by certain vaccines. We are interested in the anti-vaxxer movement and what we can learn from analyzing the vaccines that caused a serious side-effect such as hospitalization, death, or disablement. We are also curious to see which of those affected were in at risk populations, such as young babies and older patients.
+
+Format: CSV file
