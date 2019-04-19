@@ -70,7 +70,7 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
     changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
     qualified_table_name = PROJECT_ID + ':dataset2.primaryinfo_2'
-    table_schema = 'vax_id:INTEGER, vaers_id:INTEGER, vax_name:STRING, vax_type:STRING, vax_manu:STRING, vax_route:STRING, year:STRING'
+    table_schema = 'vaers_id:INTEGER, state:STRING, hospitalization:BOOLEAN, disabled:BOOLEAN, age:FLOAT, sex:STRING, died:BOOLEAN, recovered:STRING, year:STRING'
     
     changeNulls_out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
                                                     schema=table_schema,  
