@@ -8,32 +8,32 @@ from apache_beam.io import WriteToText
 # Adds primary key to table
 class changeNullsFn(beam.DoFn):
     def process(self, element):
-    record = element
-    vaers_id = record.get('vaers_id')
-    state = record.get('state')
-    if IFMISSING(state):
-        state = "U"
-    hospitalization = record.get('hospitalization')
-    if IFMISSING(hospitalization):
-        hospitalization = "false"
-    disabled = record.get('disabled')
-    if IFMISSIING(disabled):
-        disabled = "false"
-    age = record.get('age')
-    sex = record.get('sex')
-    died = record.get('died')
-    if IFMISSING(died):
-        died = "false"
-    recovered = record.get('recovered')
-    if IFMISSING(recovered):
-        recovered = "U"
-    year = record.get('year')
+        record = element
+        vaers_id = record.get('vaers_id')
+        state = record.get('state')
+        if IFMISSING(state):
+            state = "U"
+        hospitalization = record.get('hospitalization')
+        if IFMISSING(hospitalization):
+            hospitalization = "false"
+        disabled = record.get('disabled')
+        if IFMISSIING(disabled):
+            disabled = "false"
+        age = record.get('age')
+        sex = record.get('sex')
+        died = record.get('died')
+        if IFMISSING(died):
+            died = "false"
+        recovered = record.get('recovered')
+        if IFMISSING(recovered):
+            recovered = "U"
+        year = record.get('year')
 
-    record = {'vaers_id': vaers_id, 'state':state, 'hospitalization':hospitalization,
-              'disabled':disabled, 'age':age, 'sex':sex, 'died':died,
-              'recovered':recovered, 'year':year}
+        record = {'vaers_id': vaers_id, 'state':state, 'hospitalization':hospitalization,
+                  'disabled':disabled, 'age':age, 'sex':sex, 'died':died,
+                  'recovered':recovered, 'year':year}
 
-    return [record]
+        return [record]
 
 class MakeRecordFn(beam.DoFn):
   def process(self, element):
