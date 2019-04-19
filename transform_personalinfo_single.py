@@ -11,21 +11,21 @@ class changeNullsFn(beam.DoFn):
         record = element
         vaers_id = record.get('vaers_id')
         state = record.get('state')
-        if IFMISSING(state):
+        if state == None:
             state = "U"
         hospitalization = record.get('hospitalization')
-        if IFMISSING(hospitalization):
+        if hospitalization== None:
             hospitalization = "false"
         disabled = record.get('disabled')
-        if IFMISSIING(disabled):
+        if disabled == None:
             disabled = "false"
         age = record.get('age')
         sex = record.get('sex')
         died = record.get('died')
-        if IFMISSING(died):
+        if died == None:
             died = "false"
         recovered = record.get('recovered')
-        if IFMISSING(recovered):
+        if recovered == None:   
             recovered = "U"
         year = record.get('year')
 
