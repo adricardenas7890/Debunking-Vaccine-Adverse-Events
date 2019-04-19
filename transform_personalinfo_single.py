@@ -15,15 +15,15 @@ class changeNullsFn(beam.DoFn):
             state = "U"
         hospitalization = record.get('hospitalization')
         if hospitalization== None:
-            hospitalization = "false"
+            hospitalization = False
         disabled = record.get('disabled')
         if disabled == None:
-            disabled = "false"
+            disabled = False
         age = record.get('age')
         sex = record.get('sex')
         died = record.get('died')
         if died == None:
-            died = "false"
+            died = False
         recovered = record.get('recovered')
         if recovered == None:   
             recovered = "U"
