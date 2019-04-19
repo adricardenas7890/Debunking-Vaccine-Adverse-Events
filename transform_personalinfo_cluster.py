@@ -70,7 +70,7 @@ opts = beam.pipeline.PipelineOptions(flags=[], **options)
 with beam.Pipeline('DataflowRunner', options=opts) as p:
 
 # Create a Pipeline using a local runner for execution.
-with beam.Pipeline('DirectRunner', options=opts) as p:
+#with beam.Pipeline('DirectRunner', options=opts) as p:
 
     query_results = p | 'Read from BigQuery' >> beam.io.Read(beam.io.BigQuerySource(query='SELECT * FROM dataset2.primaryinfo'))
 
@@ -85,7 +85,7 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
     
     # make BQ records, when writing from Beam to BQ, BQ expects a dictionary
   
-    #changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
+    changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
     qualified_table_name = PROJECT_ID + ':dataset2.primaryinfo_3'
     table_schema = 'vaers_id:STRING,state:STRING,hospitalization:STRING,disabled:STRING,age:STRING,sex:STRING,died:STRING,recovered:STRING,year:STRING'

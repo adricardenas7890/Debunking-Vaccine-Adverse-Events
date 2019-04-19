@@ -5,7 +5,7 @@ from apache_beam.io import ReadFromText
 from apache_beam.io import WriteToText
 
 # DoFn performs on each element in the input PCollection.
-# Adds primary key to table
+# Changes null to values
 class changeNullsFn(beam.DoFn):
     def process(self, element):
         record = element
