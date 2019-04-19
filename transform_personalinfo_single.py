@@ -54,7 +54,7 @@ opts = beam.pipeline.PipelineOptions(flags=[], **options)
 # Create a Pipeline using a local runner for execution.
 with beam.Pipeline('DirectRunner', options=opts) as p:
 
-    query_results = p | 'Read from BigQuery' >> beam.io.Read(beam.io.BigQuerySource(query='SELECT * FROM dataset2.personalinfo LIMIT 100'))
+    query_results = p | 'Read from BigQuery' >> beam.io.Read(beam.io.BigQuerySource(query='SELECT * FROM dataset2.primaryinfo LIMIT 100'))
 
     # write PCollection to log file
     query_results | 'Write to log 1' >> WriteToText('input.txt')
@@ -69,7 +69,7 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
   
     changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
-    qualified_table_name = PROJECT_ID + ':dataset2.personalinfo_2'
+    qualified_table_name = PROJECT_ID + ':dataset2.primaryinfo_2'
     table_schema = 'vax_id:INTEGER, vaers_id:INTEGER, vax_name:STRING, vax_type:STRING, vax_manu:STRING, vax_route:STRING, year:STRING'
     
     changeNulls_out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
