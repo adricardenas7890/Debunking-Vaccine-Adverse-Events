@@ -10,32 +10,32 @@ from apache_beam.io import WriteToText
 # change all null values
 class changeNullsFn(beam.DoFn):
     def process(self, element):
-    record = element
-    vaers_id = record.get('vaers_id')
-    state = record.get('state')
-    if IFMISSING(state):
-        state = "U"
-    hospitalization = record.get('hospitalization')
-    if IFMISSING(hospitalization):
-        hospitalization = "false"
-    disabled = record.get('disabled')
-    if IFMISSIING(disabled):
-        disabled = "false"
-    age = record.get('age')
-    sex = record.get('sex')
-    died = record.get('died')
-    if IFMISSING(died):
-        died = "false"
-    recovered = record.get('recovered')
-    if IFMISSING(recovered):
-        recovered = "U"
-    year = record.get('year')
+        record = element
+        vaers_id = record.get('vaers_id')
+        state = record.get('state')
+        if state == None:
+            state = "U"
+        hospitalization = record.get('hospitalization')
+        if hospitalization == None:
+            hospitalization = "false"
+        disabled = record.get('disabled')
+        if disabled == None:
+            disabled = "false"
+        age = record.get('age')
+        sex = record.get('sex')
+        died = record.get('died')
+        if died == None:
+            died = "false"
+        recovered = record.get('recovered')
+        if recovered == None:
+            recovered = "U"
+        year = record.get('year')
 
-    record = {'vaers_id': vaers_id, 'state':state, 'hospitalization':hospitalization,
-              'disabled':disabled, 'age':age, 'sex':sex, 'died':died,
-              'recovered':recovered, 'year':year}
+        record = {'vaers_id': vaers_id, 'state':state, 'hospitalization':hospitalization,
+                  'disabled':disabled, 'age':age, 'sex':sex, 'died':died,
+                  'recovered':recovered, 'year':year}
 
-    return [record]
+        return [record]
 
 class MakeRecordFn(beam.DoFn):
   def process(self, element):
@@ -53,7 +53,7 @@ DIR_PATH_OUT = BUCKET + '/output/' + datetime.datetime.now().strftime('%Y_%m_%d_
 # run pipeline on Dataflow 
 options = {
     'runner': 'DataflowRunner',
-    'job_name': 'nomination-count-8',
+    'job_name': 'primaryinfo_3',
     'project': PROJECT_ID,
     'temp_location': BUCKET + '/temp',
     'staging_location': BUCKET + '/staging',
@@ -67,7 +67,7 @@ with beam.Pipeline('DataflowRunner', options=opts) as p:
 # Create a Pipeline using a local runner for execution.
 with beam.Pipeline('DirectRunner', options=opts) as p:
 
-    query_results = p | 'Read from BigQuery' >> beam.io.Read(beam.io.BigQuerySource(query='SELECT * FROM dataset2.personalinfo LIMIT 100'))
+    query_results = p | 'Read from BigQuery' >> beam.io.Read(beam.io.BigQuerySource(query='SELECT * FROM dataset2.primaryinfo LIMIT 100'))
 
     # write PCollection to log file
     query_results | 'Write to log 1' >> WriteToText('input.txt')
@@ -82,8 +82,8 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
   
     changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
-    qualified_table_name = PROJECT_ID + ':dataset2.personalinfo_2'
-    table_schema = 'vax_id:INTEGER, vaers_id:INTEGER, vax_name:STRING, vax_type:STRING, vax_manu:STRING, vax_route:STRING, year:STRING'
+    qualified_table_name = PROJECT_ID + ':dataset2.primaryinfo_3'
+    table_schema = 'vaers_id:INTEGER, state:STRING, hospitalization:BOOLEAN, disabled:BOOLEAN, age:FLOAT, sex:STRING, died:BOOLEAN, recovered:STRING, year:STRING'
     
     changeNulls_out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
                                                     schema=table_schema,  
