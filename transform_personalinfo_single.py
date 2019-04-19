@@ -12,18 +12,18 @@ class changeNullsFn(beam.DoFn):
         vaers_id = record.get('vaers_id')
         state = record.get('state')
         if state == None:
-            state = "U"
+            state = str("U")
         hospitalization = record.get('hospitalization')
         if hospitalization== None:
-            hospitalization = str("false")
+            hospitalization = False
         disabled = record.get('disabled')
         if disabled == None:
-            disabled = str("false")
+            disabled = False
         age = record.get('age')
         sex = record.get('sex')
         died = record.get('died')
         if died == None:
-            died = str("false")
+            died = False
         recovered = record.get('recovered')
         if recovered == None:   
             recovered = str("U")
@@ -70,7 +70,7 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
     changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
     qualified_table_name = PROJECT_ID + ':dataset2.primaryinfo_2'
-    table_schema = 'vaers_id:STRING,state:STRING,hospitalization:STRING,disabled:STRING,age:FLOAT,sex:STRING,died:STRING,recovered:STRING,year:STRING'
+    table_schema = 'vaers_id:INTEGER,state:STRING,hospitalization:BOOLEAN,disabled:BOOLEAN,age:FLOAT,sex:STRING,died:BOOLEAN,recovered:STRING,year:STRING'
     
     changeNulls_out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
                                                     schema=table_schema,  
