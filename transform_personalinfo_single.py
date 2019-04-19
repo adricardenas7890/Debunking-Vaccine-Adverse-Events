@@ -10,24 +10,37 @@ class changeNullsFn(beam.DoFn):
     def process(self, element):
         record = element
         vaers_id = record.get('vaers_id')
+        vaers_id = str(vaers_id)
         state = record.get('state')
         if state == None:
             state = str("U")
+        else:
+            state = str(state)
         hospitalization = record.get('hospitalization')
-        if hospitalization== None:
+        if hospitalization == None:
             hospitalization = str("false")
+        else:
+            hospitalization = str(hospitalization)
         disabled = record.get('disabled')
         if disabled == None:
             disabled = str("false")
+        else:
+            disabled = str(disabled)
         age = record.get('age')
+        age = str(age)
         sex = record.get('sex')
         died = record.get('died')
         if died == None:
             died = str("false")
+        else:
+            died = str(died)
         recovered = record.get('recovered')
         if recovered == None:   
             recovered = str("U")
+        else:
+            recovered = str(recovered)
         year = record.get('year')
+        year = str(year)
 
         record = {'vaers_id': vaers_id, 'state':state, 'hospitalization':hospitalization,
                   'disabled':disabled, 'age':age, 'sex':sex, 'died':died,
@@ -70,7 +83,7 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
     changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
     qualified_table_name = PROJECT_ID + ':dataset2.primaryinfo_2'
-    table_schema = 'vaers_id:INTEGER,state:STRING,hospitalization:STRING,disabled:STRING,age:STRING,sex:STRING,died:STRING,recovered:STRING,year:STRING'
+    table_schema = 'vaers_id:STRING,state:STRING,hospitalization:STRING,disabled:STRING,age:STRING,sex:STRING,died:STRING,recovered:STRING,year:STRING'
     
     changeNulls_out_pcoll | 'Write to BigQuery' >> beam.io.Write(beam.io.BigQuerySink(qualified_table_name, 
                                                     schema=table_schema,  
