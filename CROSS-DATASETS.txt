@@ -14,7 +14,8 @@ Queries
 
 --Identify which vaccines are administered to patients older than 18 and the prevalence of each.
 
---Identify how many deaths occcured in at risk populations as a result of the vaccine. Example: over 65, under 2. Compare to how total amount of patients in those categories. 
+--Identify how many deaths occcured in at risk populations as a result of the vaccine. Example: over 65, under 2. Compare to how total amount of patients in those categories.
+ 
 
 Transforms needed:
 
