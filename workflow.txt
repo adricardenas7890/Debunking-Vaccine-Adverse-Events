@@ -1,16 +1,31 @@
 WORKFLOW.txt
 A description of Airflow workflow to be implemented in Milestone 12
 
-Task: copyPrimaryInfo
-	This will copy the original primary info table from Big Query that was unioned based on several different year tables from Enigma. 
+Task: createPrimaryInfo
+	This will create the BQ workflow file
 
-Task: changeNulls_toStrings
-	This function will change all null values in the state, hospitalization, disabled, died and recovered fields to "False" (hospitalization, disabled, died) or "U" (state, recovered). This task is dependent on the copyPrimaryInfo function that gets the table.
+Task: fillPrimaryInfo
+	This will fill the BQ dataset with the dataset2.primaryinfo table, which has already been unioned. 
 
-Task: normalizeValues
+Task: changeNullsState
+	This function will change all null values in state to "U". This task is dependent on fillPrimaryInfo and createPrimaryInfo. It is independent from all others.
+
+Task: changeNullsHospital
+	This function will change all null values in state to "false". This task is dependent on fillPrimaryInfo and createPrimaryInfo. It is independent from all others.
+
+Task: changeNullsDisabled
+	This function will change all null values in disabled to "false". This task is dependent on fillPrimaryInfo and createPrimaryInfo. It is independent from all others.
+
+Task: changeNullsDied
+	This function will change all null values in died to "false". This task is dependent on fillPrimaryInfo and createPrimaryInfo. It is independent from all others.
+
+Task: changeNullsRecovered
+	This function will change all null values in recovered to "U". This task is dependent on fillPrimaryInfo and createPrimaryInfo. It is independent from all others.
+
+Task: normalizeState
 	This will check for correct capitalization of the state, sex and recovered fields. If an entry is not capitalized correctly, this will change it accordingly. This is dependent on changeNulls_toStrings because we want to correct the fields after they've been populated. 
 
 
 Workflow:
 
-copyPrimaryInfo >> changeNulls_toStrings >> normalizeValues 
+createPrimaryInfo >> fillPrimaryInfo >> changeNullsState >> changeNullsHospital >> changeNullsDisabled >> changeNullsDied >> changeNullsRecovered >> changeNullsRecovered >> normalizeState
