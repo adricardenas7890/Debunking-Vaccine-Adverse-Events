@@ -114,4 +114,4 @@ with models.DAG(
         task_id='normalize uncapitalized values state',
         bash_command='bq query --use_legacy_sql=false "' + sql7 + '"')  # default trigger rule is all_success
 
-    createPrimaryInfo >> fillPrimaryInfo >> changeNullsState >> changeNullsHospital >> changeNullsDisabled >> changeNullsDied >> changeNullsRecovered >> changeNullsRecovered >> normalizeState
+    createPrimaryInfo >> fillPrimaryInfo >> changeNullsState, changeNullsHospital, changeNullsDisabled,changeNullsDied, changeNullsRecovered, normalizeState
