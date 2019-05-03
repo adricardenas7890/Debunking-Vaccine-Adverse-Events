@@ -16,7 +16,7 @@ default_dag_args = {
     'start_date': datetime.datetime(2019, 5, 3)
 }
 
-sql1 = """select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2006" as year#
+sql1 = """select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2006" as year
 from dataset2_original.pi2006
 where vaers_id is not null
 union distinct 
@@ -72,14 +72,10 @@ with models.DAG(
         schedule_interval=datetime.timedelta(days=1),
         default_args=default_dag_args) as dag:
 
-    createPrimaryInfo = BashOperator(
-        task_id='create_dataset_workflow',
-        bash_command='bq mk workflow')
-
     fillPrimaryInfo = BashOperator(
         task_id='fill_workflow',
         bash_command='bq query --use_legacy_sql=false "' + sql1 + '"')  # default trigger rule is all_success
-
+    print("success")
     '''
     #use if you need to union tables
     for table in BQ_TABLES:
@@ -91,15 +87,18 @@ with models.DAG(
     '''
     changeNullsState = BashOperator(
         task_id='change_nulls_to_false_state',
-        bash_command='bq query --use_legacy_sql=false "' + sql2 + '"')  # default trigger rule is all_success
+        bash_command='bq query --use_legacy_sql=false "' + sql2 + '"',
+        trigger_rule="all_failed")  # default trigger rule is all_success
 
     changeNullsHospital = BashOperator(
         task_id='change_nulls_to_false_hospitalization',
-        bash_command='bq query --use_legacy_sql=false "' + sql3 + '"')  # default trigger rule is all_success
+        bash_command='bq query --use_legacy_sql=false "' + sql3 + '"',
+        trigger_rule="all_failed")  # default trigger rule is all_success
 
     changeNullsDisabled = BashOperator(
         task_id='change_nulls_to_false_disabled',
-        bash_command='bq query --use_legacy_sql=false "' + sql4 + '"')  # default trigger rule is all_success
+        bash_command='bq query --use_legacy_sql=false "' + sql4 + '"',
+        trigger_rule="all_failed")# default trigger rule is all_success
 
     changeNullsDied = BashOperator(
         task_id='change_nulls_to_false',
@@ -113,4 +112,4 @@ with models.DAG(
         task_id='normalize_uncapitalized_values_state',
         bash_command='bq query --use_legacy_sql=false "' + sql7 + '"')  # default trigger rule is all_success
 
-    createPrimaryInfo >> fillPrimaryInfo >> changeNullsState, changeNullsHospital, changeNullsDisabled,changeNullsDied, changeNullsRecovered, normalizeState
+    fillPrimaryInfo >> changeNullsState >> changeNullsHospital >> changeNullsDisabled >> changeNullsDied >> changeNullsRecovered >> normalizeState
