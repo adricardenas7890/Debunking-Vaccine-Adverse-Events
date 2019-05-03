@@ -4,66 +4,68 @@ import datetime
 from airflow import models
 from airflow.operators.bash_operator import BashOperator
 
+'''
 #change this to either unioned table or ALL tables from dataset2original
 BQ_TABLES = [
     'dataset2.primaryinfo'
 ]
+'''
 
 default_dag_args = {
     # https://airflow.apache.org/faq.html#what-s-the-deal-with-start-date
     'start_date': datetime.datetime(2019, 5, 1)
 }
 
-sql1 = "create table dataset2.primaryinfo_workflow" +
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2006" as year'+
-'from dataset2_original.pi2006' +
-'where vaers_id is not null' +
-'union distinct'+
-'elect distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2007" as year' +
-'from dataset2_original.pi2007' +
-'where vaers_id is not null' +
-'union distinct' + 
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2008" as year'+
-'from dataset2_original.pi2008'+
-'where vaers_id is not null'+
-'union distinct'+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2009" as year'+
-'from dataset2_original.pi2009'+
-'where vaers_id is not null'+
-'union distinct '+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2010" as year'+
-'from dataset2_original.pi2010'+
-'where vaers_id is not null'+
-'union distinct '+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2011" as year'+
-'from dataset2_original.pi2011'+
-'where vaers_id is not null'+
-'union distinct'+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2012" as year'+
-'from dataset2_original.pi2012'+
-'where vaers_id is not null'+
-'union distinct '+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2013" as year'+
-'from dataset2_original.pi2013'+
-'where vaers_id is not null'+
-'union distinct'+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2014" as year'+
-'from dataset2_original.pi2014'+
-'where vaers_id is not null'+
-'union distinct'+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2015" as year'+
-'from dataset2_original.pi2015'+
-'where vaers_id is not null'+
-'union distinct'+
-'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2016" as year'+
-'from dataset2_original.pi2016'+
-'where vaers_id is not null'
-sql2 = 'update dataset2.primaryinfo_workflowp set state = "U" where state is null'
-sql3 = 'update dataset2.primaryinfo_workflow set hospitalization = False where hospitalization is null'
-sql4 = 'update dataset2.primaryinfo_workflow set disabled = False where disabled is null'
-sql5 = 'update dataset2.primaryinfo_workflow set died = False where died is null'
-sql6 = 'update dataset2.primaryinfo_workflow set recovered = "U" where recovered is null'
-sql7 = 'update dataset2.primaryinfo_workflow set state = UPPER(state) where state != UPPER(state)'
+sql1 = ('create table dataset2.workflow' +
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2006" as year'+
+    'from dataset2_original.pi2006' +
+    'where vaers_id is not null' +
+    'union distinct'+
+    'elect distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2007" as year' +
+    'from dataset2_original.pi2007' +
+    'where vaers_id is not null' +
+    'union distinct' +
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2008" as year'+
+    'from dataset2_original.pi2008'+
+    'where vaers_id is not null'+
+    'union distinct'+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2009" as year'+
+    'from dataset2_original.pi2009'+
+    'where vaers_id is not null'+
+    'union distinct '+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2010" as year'+
+    'from dataset2_original.pi2010'+
+    'where vaers_id is not null'+
+    'union distinct '+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2011" as year'+
+    'from dataset2_original.pi2011'+
+    'where vaers_id is not null'+
+    'union distinct'+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2012" as year'+
+    'from dataset2_original.pi2012'+
+    'where vaers_id is not null'+
+    'union distinct '+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2013" as year'+
+    'from dataset2_original.pi2013'+
+    'where vaers_id is not null'+
+    'union distinct'+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2014" as year'+
+    'from dataset2_original.pi2014'+
+    'where vaers_id is not null'+
+    'union distinct'+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2015" as year'+
+    'from dataset2_original.pi2015'+
+    'where vaers_id is not null'+
+    'union distinct'+
+    'select distinct vaers_id, state,hospital as hospitalization, disable as disabled, age_yrs as age, sex, died, recovd as recovered, "2016" as year'+
+    'from dataset2_original.pi2016'+
+    'where vaers_id is not null')
+sql2 = 'update dataset2.workflow set state = "U" where state is null'
+sql3 = 'update dataset2.workflow set hospitalization = False where hospitalization is null'
+sql4 = 'update dataset2.workflow set disabled = False where disabled is null'
+sql5 = 'update dataset2.workflow set died = False where died is null'
+sql6 = 'update dataset2.workflow set recovered = "U" where recovered is null'
+sql7 = 'update dataset2.workflow set state = UPPER(state) where state != UPPER(state)'
 
 
 with models.DAG(
@@ -75,7 +77,6 @@ with models.DAG(
         task_id='create dataset workflow',
         bash_command='bq mk workflow',)
 
-    #figure out if we need this or we can import our unioned table
     fillPrimaryInfo = BashOperator(
         task_id='fill workflow',
         bash_command='bq query --use_legacy_sql=false "' + sql1 + '"')  # default trigger rule is all_success
