@@ -46,15 +46,7 @@ class changeNullsFn(beam.DoFn):
                   'disabled':disabled, 'age':age, 'sex':sex, 'died':died,
                   'recovered':recovered, 'year':year}
 
-        return [record]
-
-class MakeRecordFn(beam.DoFn):
-  def process(self, element):
-    vaers_id, state, hospitalization, disabled, age, sex, died, recovered, year = element
-    record = {'vaers_id': vaers_id, 'state':state, 'hospitalization':hospitalization,
-              'disabled':disabled, 'age':age, 'sex':sex, 'died':died,
-              'recovered':recovered, 'year':year}
-    return [record] 
+        return [record] 
         
 PROJECT_ID = os.environ['PROJECT_ID']
 
@@ -77,10 +69,6 @@ with beam.Pipeline('DirectRunner', options=opts) as p:
 
     # write PCollection to log file
     changeNulls_in_pcoll | 'Write to log 2' >> WriteToText('output.txt')
-    
-    # make BQ records, when writing from Beam to BQ, BQ expects a dictionary
-  
-    # changeNulls_out_pcoll = changeNulls_in_pcoll | 'Make BQ Record' >> beam.ParDo(MakeRecordFn())
     
     qualified_table_name = PROJECT_ID + ':dataset2.primaryinfo_2'
     table_schema = 'vaers_id:STRING,state:STRING,hospitalization:STRING,disabled:STRING,age:STRING,sex:STRING,died:STRING,recovered:STRING,year:STRING'
